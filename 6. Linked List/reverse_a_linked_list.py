@@ -17,13 +17,27 @@ def reverse_a_linked_list_recursive(head):
     pass
 
 def reverse_a_linked_list_iteration(head):
-    pass
+    
+    if head is None or head.next is None:
+        return head
+    
+    previous = None
+    current = head
 
-# lst1 = [20,30,40,50,60,70]
-lst1 = [20]
+    while current is not None:
+        next = current.next
+        current.next = previous
+        previous = current
+        current = next
+
+    return previous
+        
+
+lst1 = [20,30,40,50,60,70]
+# lst1 = [20]
 head_LL1 = take_input_from_list(lst1)
 print_LL(head_LL1)
 print()
 
-head_LL = reverse_a_linked_list_optimized_recursive(head_LL1)
+head_LL = reverse_a_linked_list_iteration(head_LL1)
 print_LL(head_LL)

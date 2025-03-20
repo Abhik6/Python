@@ -31,9 +31,9 @@ def merge_sorted_list(head1,head2):
             head2 = head2.next
             new_tail.next = None 
         
-        print("\nAfter iteration:")
-        print_LL(new_head)
-        print()
+        # print("\nAfter iteration:")
+        # print_LL(new_head)
+        # print()
        
     if head1 is not None:
         new_tail.next = head1
@@ -41,20 +41,20 @@ def merge_sorted_list(head1,head2):
     if head2 is not None:
         new_tail.next = head2
     
-    print()
+    # print()
 
     return new_head
 
-lst1 = [20,30,40,50,60,70]
-head_LL1 = take_input_from_list(lst1)
-print_LL(head_LL1)
-print()
+# lst1 = [20,30,40,50,60,70]
+# head_LL1 = take_input_from_list(lst1)
+# print_LL(head_LL1)
+# print()
 
-lst2 = [2,3,4,80,90,100]
-head_LL2 = take_input_from_list(lst2)
-print_LL(head_LL2)
-print()
+# lst2 = [2,3,4,80,90,100]
+# head_LL2 = take_input_from_list(lst2)
+# print_LL(head_LL2)
+# print()
 
-new_head = merge_sorted_list(head_LL1,head_LL2)
-print_LL(new_head)
-print()
+# new_head = merge_sorted_list(head_LL1,head_LL2)
+# print_LL(new_head)
+# print()
