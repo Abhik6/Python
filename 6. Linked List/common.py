@@ -7,6 +7,9 @@ class Node:
 def print_LL(head):
     temp = head
     while temp!=None:
+        if temp.next is None:
+            print(temp.data, end = "->\n")
+            return
         print(temp.data, end= "->")
         temp = temp.next
 
