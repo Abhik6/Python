@@ -70,6 +70,82 @@ class Linked_List:
         temp.next = new_node
 
         return self
+
+    def delete_elem_at_head(self):
+
+        if self.head is None:
+            return self
+        
+        self.head = self.head.next
+
+        return self
+
+    def delete_elem_at_tail(self):
+
+        if self.head is None:
+            return self
+
+        if self.head.next is None:
+            self.head = None
+            return self
+        
+        temp = self.head
+
+        while temp.next.next is not None:
+            temp = temp.next
+        
+        temp.next = None
+
+        return self
+
+    def delete_elem_at_index(self, index):
+
+        if self.head is None:
+            print("Index out of bounds")
+        
+        if index == 0:
+            return self.delete_elem_at_head()
+        
+        temp = self.head
+        count = 1
+
+        while temp is not None and count < index:
+            temp = temp.next
+            count+=1
+
+        if temp is None or temp.next is None:
+            print("Index out of bounds")
+            return self
+
+        temp.next = temp.next.next
+
+        return self
+
+    def delete_elem_by_value(self, value):
+
+        if self.head is None:
+            print("Value not present")
+            return self
+
+        if self.head.data == value:
+            self.head = self.head.next
+            return head
+
+        temp = self.head
+
+        while temp is not None and temp.next.data != value:
+            temp = temp.next
+
+        if temp is None or temp.next is None:
+            print("Value not present")
+            return self
+
+        
+        
+
+
+
+
         
 
     
