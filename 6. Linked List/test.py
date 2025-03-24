@@ -19,11 +19,17 @@ print_LL(ll.head)
 ll = ll.insert_elem_at_index(80, 7)
 print_LL(ll.head)
 
-ll = ll.delete_elem_at_head()
-print_LL(ll.head)
+# ll = ll.delete_elem_at_head()
+# print_LL(ll.head)
 
-ll = ll.delete_elem_at_tail()
-print_LL(ll.head)
+# ll = ll.delete_elem_at_tail()
+# print_LL(ll.head)
 
-ll = ll.delete_elem_at_index(10)
-print_LL(ll.head)
+# ll = ll.delete_elem_at_index(10)
+# print_LL(ll.head)
+
+# ll = ll.delete_elem_by_value(100)
+# print_LL(ll.head)
+
+value = ll.search_elem_by_index(8)
+print(value)

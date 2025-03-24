@@ -129,16 +129,40 @@ class Linked_List:
 
         if self.head.data == value:
             self.head = self.head.next
-            return head
+            return self
 
         temp = self.head
 
-        while temp is not None and temp.next.data != value:
+        while temp.next is not None and temp.next.data != value:
             temp = temp.next
 
-        if temp is None or temp.next is None:
+        if temp.next is None:
             print("Value not present")
             return self
+
+        temp.next = temp.next.next
+
+        return self
+    
+    def search_elem_by_index(self, index):
+
+        if self.head is None:
+            print("Index out of bounds")
+            return self
+        
+        temp = self.head
+        count = 0
+        while temp is not None and count < index:
+            temp = temp.next
+            count+=1
+        
+        if temp is None:
+            print("Index out of bounds")
+            return self
+
+        return temp.data
+        
+
 
         
         
