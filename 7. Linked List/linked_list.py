@@ -144,7 +144,7 @@ class Linked_List:
 
         return self
     
-    def search_elem_by_index(self, index):
+    def get_elem(self, index):
 
         if self.head is None:
             print("Index out of bounds")
@@ -161,6 +161,25 @@ class Linked_List:
             return self
 
         return temp.data
+    
+    def is_elem_present(self, value):
+
+        if self.head is None:
+            return -1
+        
+        temp = self.head
+        index = 0
+
+        while temp is not None and temp.data != value:
+            temp = temp.next
+            index+=1
+
+        if temp is None:
+            return -1
+        
+        return index
+        
+
         
 
 

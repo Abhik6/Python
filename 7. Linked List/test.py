@@ -31,5 +31,8 @@ print_LL(ll.head)
 # ll = ll.delete_elem_by_value(100)
 # print_LL(ll.head)
 
-value = ll.search_elem_by_index(8)
+# value = ll.get_elem(8)
+# print(value)
+
+value = ll.is_elem_present(2)
 print(value)
