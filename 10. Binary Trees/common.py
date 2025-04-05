@@ -67,7 +67,35 @@ def predefined_binary_trees():
         # /
         # 6         
 
-    return root1, root2, root3
+
+    root4 = BinaryTreeNode(1)
+    child1 = BinaryTreeNode(2)
+    child2 = BinaryTreeNode(3)
+    child3 = BinaryTreeNode(4)
+    child4 = BinaryTreeNode(5)
+    child5 = BinaryTreeNode(6)
+    child6 = BinaryTreeNode(7)
+    child7 = BinaryTreeNode(8)
+    root4.left = child1
+    root4.right = child2
+    child1.left = child3
+    child1.right = child4
+    child3.left = child5
+    child4.right = child6
+    child6.right = child7
+
+    #           1
+    #         /   \
+    #        2     3
+    #       /  \    
+    #      4    5    
+    #     /      \
+    #    6        7
+    #              \
+    #               8 
+
+
+    return root1, root2, root3, root4
 
 
 def print_binary_tree_recursive(root):
@@ -161,6 +189,82 @@ def take_input_levelwise():
             current_node.right = None
 
     return root
+
+def height_of_binary_tree(root):
+    
+    if root is None:
+        return 0
+
+    Left_child_height = height_of_binary_tree(root.left)
+    right_child_height = height_of_binary_tree(root.right)
+
+    height = 1 + max(Left_child_height, right_child_height)
+
+    return height
+
+def diameter_of_binary_tree(root):
+
+    if root is None:
+        return 0
+    
+    left_height = height_of_binary_tree(root.left)
+    right_height = height_of_binary_tree(root.right)
+
+    left_diameter = diameter_of_binary_tree(root.left)
+    right_diameter = diameter_of_binary_tree(root.right)
+
+    ans_diamter = max(left_diameter, right_diameter, left_height + right_height)
+
+    return ans_diamter
+
+def diameter_of_binary_tree_optimized(root):
+
+    if root is None:
+        return 0,0
+    
+    left_height, left_diameter = diameter_of_binary_tree_optimized(root.left)
+    right_height, right_diameter = diameter_of_binary_tree_optimized(root.right)
+    
+    diameter = max(left_diameter, right_diameter, left_height+right_height)
+
+    height = 1 + max(left_height, right_height)
+
+    return height, diameter
+
+def is_binary_tree_balanced(root):
+
+    if root is None:
+        return True
+    
+    left_height = height_of_binary_tree(root.left)
+    right_height = height_of_binary_tree(root.right)
+
+    if abs(left_height - right_height) > 1:
+        return False
+    else:
+        is_left_balanced = is_binary_tree_balanced(root.left)
+        is_right_balanced = is_binary_tree_balanced(root.right)
+        if (not is_left_balanced) or (not is_right_balanced):
+            return False
+
+    return True    
+
+def is_binary_tree_balanced_optimized(root):
+
+    if root is None:
+        return True, 0
+    
+    is_left_balanced, left_height = is_binary_tree_balanced_optimized(root.left)
+    is_right_balanced, right_height = is_binary_tree_balanced_optimized(root.right)
+
+    height = 1 + max(left_height, right_height)
+
+    height_diff = abs(left_height - right_height)
+
+    if (not is_left_balanced) or (not is_right_balanced) or (height_diff > 1):
+        return False, height
+    
+    return True, height
 
 
 

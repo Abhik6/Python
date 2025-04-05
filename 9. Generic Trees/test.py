@@ -44,3 +44,4 @@ print("Root2")
 postorder_traversal(root2)
 print("Root3")
 postorder_traversal(root3)
+
