@@ -266,6 +266,120 @@ def is_binary_tree_balanced_optimized(root):
     
     return True, height
 
+def preorder_traversal(root):
+
+    if root is None:
+        return
+    
+    print(root.val, end=" ")
+
+    preorder_traversal(root.left)
+    preorder_traversal(root.right)
+
+def postorder_traversal(root):
+
+    if root is None:
+        return
+
+    postorder_traversal(root.left)
+    postorder_traversal(root.right)
+
+    print(root.val, end=" ")
+
+def inorder_traversal(root):
+
+    if root is None:
+        return
+
+    inorder_traversal(root.left)
+    print(root.val, end=" ")
+    inorder_traversal(root.right)
+
+
+def construct_tree_from_preorder_and_inorder_helper(preorder, inorder, pre_start, pre_end, in_start, in_end):
+
+    if pre_start>pre_end or in_start>in_end:
+        return None
+    
+    root_data = preorder[pre_start]
+    root = BinaryTreeNode(root_data)
+
+    root_index_in_inorder = -1
+    for i in range(len(inorder)):
+        if inorder[i] == root_data:
+            root_index_in_inorder = i
+            break
+    
+    if root_index_in_inorder == -1:
+        print("Root not found in inorder, please check")
+        return None
+    
+    left_pre_start = pre_start + 1
+    left_in_start = in_start
+    left_in_end = root_index_in_inorder - 1
+    left_pre_end = left_pre_start + (left_in_end - left_in_start)
+
+    right_pre_start = left_pre_end + 1
+    right_pre_end = pre_end
+    right_in_start = root_index_in_inorder + 1
+    right_in_end = in_end
+
+    root.left = construct_tree_from_preorder_and_inorder_helper(preorder, inorder, left_pre_start, left_pre_end, left_in_start, left_in_end)
+    root.right = construct_tree_from_preorder_and_inorder_helper(preorder, inorder, right_pre_start, right_pre_end, right_in_start, right_in_end)
+
+    return root    
+
+def construct_tree_from_preorder_and_inorder(preorder, inorder):
+
+    pre_start = 0
+    pre_end = len(preorder) - 1
+    in_start = 0
+    in_end = len(inorder) - 1
+
+    return construct_tree_from_preorder_and_inorder_helper(preorder, inorder, pre_start, pre_end, in_start, in_end)
+
+
+def construct_tree_from_postorder_and_inorder_helper(postorder, inorder, post_start, post_end, in_start, in_end):
+
+    if post_start>post_end or in_start>in_end:
+        return None
+    
+    root_data = postorder[post_end]
+    root = BinaryTreeNode(root_data)
+
+    root_index_in_inorder = -1
+    for i in range(len(inorder)):
+        if inorder[i] == root_data:
+            root_index_in_inorder = i
+            break
+    
+    if root_index_in_inorder == -1:
+        print("Root not found in inorder, please check")
+        return None
+    
+    left_post_start = post_start
+    left_in_start = in_start
+    left_in_end = root_index_in_inorder - 1
+    left_post_end = left_post_start + (left_in_end - left_in_start)
+
+    right_post_start = left_post_end + 1
+    right_post_end = post_end - 1
+    right_in_start = root_index_in_inorder + 1
+    right_in_end = in_end
+
+    root.left = construct_tree_from_postorder_and_inorder_helper(postorder, inorder, left_post_start, left_post_end, left_in_start, left_in_end)
+    root.right = construct_tree_from_postorder_and_inorder_helper(postorder, inorder, right_post_start, right_post_end, right_in_start, right_in_end)
+
+    return root    
+
+def construct_tree_from_postorder_and_inorder(postorder, inorder):
+
+    post_start = 0
+    post_end = len(postorder) - 1
+    in_start = 0
+    in_end = len(inorder) - 1
+
+    return construct_tree_from_postorder_and_inorder_helper(postorder, inorder, post_start, post_end, in_start, in_end)
 
 
 

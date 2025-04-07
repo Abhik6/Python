@@ -50,7 +50,44 @@ root1, root2, root3, root4 = predefined_binary_trees()
 # print_binary_tree_levelwise(root4)
 
 
-print(is_binary_tree_balanced(root1))
-print(is_binary_tree_balanced(root2))
-print(is_binary_tree_balanced(root3))
-print(is_binary_tree_balanced(root4))
+# print(is_binary_tree_balanced(root1))
+# print(is_binary_tree_balanced(root2))
+# print(is_binary_tree_balanced(root3))
+# print(is_binary_tree_balanced(root4))
+
+# print(is_binary_tree_balanced_optimized(root1))
+# print(is_binary_tree_balanced_optimized(root2))
+# print(is_binary_tree_balanced_optimized(root3))
+# print(is_binary_tree_balanced_optimized(root4))
+
+# preorder_traversal(root4)
+# print()
+# postorder_traversal(root4)
+# print()
+# inorder_traversal(root4)
+# print()
+
+# preorder_traversal(root1)
+# print()
+# postorder_traversal(root1)
+# print()
+# inorder_traversal(root1)
+# print()
+
+# preorder = [1,2,4,5,3]
+# preorder = [1,2,4,6,5,7,8,3]
+# # inorder = [4,2,5,1,3]
+# inorder = [6,4,2,5,7,8,1,3]
+# root = construct_tree_from_preorder_and_inorder(preorder, inorder)
+# print_binary_tree_levelwise(root)
+
+postorder1 = [4,5,2,3,1]
+postorder2 = [6,4,8,7,5,2,3,1]
+inorder1 = [4,2,5,1,3]
+inorder2 = [6,4,2,5,7,8,1,3]
+print("BinaryTree1")
+r1 = construct_tree_from_postorder_and_inorder(postorder1, inorder1)
+print_binary_tree_levelwise(r1)
+print("BinaryTree2")
+r2 = construct_tree_from_postorder_and_inorder(postorder2, inorder2)
+print_binary_tree_levelwise(r2)
