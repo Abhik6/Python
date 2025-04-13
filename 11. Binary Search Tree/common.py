@@ -7,6 +7,60 @@ class BSTNode:
         self.right = None
 
 
+def create_predefined_binary_trees():
+
+    root1 = BSTNode(5)
+    child1 = BSTNode(3)
+    child2 = BSTNode(6)
+    child3 = BSTNode(2)
+    child4 = BSTNode(8)
+    child5 = BSTNode(1)
+    child6 = BSTNode(7)
+    root1.left = child1
+    root1.right = child2
+    child1.left = child3
+    child1.right = child4
+    child3.left = child5
+    child2.right = child6
+
+        #       5
+        #     /   \
+        #    3     6
+        #   /  \    \
+        #  2    8    7
+        # /
+        # 1         
+
+    root2 = BSTNode(20)
+    child1 = BSTNode(10)
+    child2 = BSTNode(30)
+    child3 = BSTNode(5)
+    child4 = BSTNode(12)
+    child5 = BSTNode(2)
+    child6 = BSTNode(15)
+    child7 = BSTNode(6)
+    root2.left = child1
+    root2.right = child2
+    child1.left = child3
+    child1.right = child4
+    child3.left = child5
+    child4.right = child6
+    child6.right = child7
+
+    #           20
+    #         /   \
+    #        10    30
+    #       /  \    
+    #      5    12    
+    #     /      \
+    #    2        15
+    #              \
+    #               6 
+
+
+    return root1, root2
+
+
 def create_predefined_BST():
     root1 = BSTNode(20)
     child1 = BSTNode(10)
@@ -166,7 +220,59 @@ def create_BST_from_sorted_list_helper(lst, start, end):
     return node
 
     
-
 def create_BST_from_sorted_list(lst):
 
     return create_BST_from_sorted_list_helper(lst, 0, len(lst))
+
+
+def get_maximum(node):
+
+    if node is None:
+        return float("-inf")
+    
+    while node.right is not None:
+        node = node.right
+
+    maximum = node.val
+
+    return maximum
+
+def get_minimum(node):
+
+    if node is None:
+        return float("inf")
+    
+    while node.left is not None:
+        node = node.left
+
+    minimum = node.val
+
+    return minimum    
+
+def check_BST(root):
+
+    if root is None:
+        return True
+
+    is_left_BST = False
+    is_right_BST = False
+    left_max = float("-inf")
+    right_min = float("inf")
+    
+    if root.left is not None:
+        if root.left.val >= root.val:
+            return False
+        else:
+            left_max = get_maximum(root.left)
+            is_left_BST = check_BST(root.left)
+    
+    if root.right is not None:
+        if root.right.val <= root.val:
+            return False
+        else:
+            right_min = get_minimum(root.right)
+            is_right_BST = check_BST(root.right)
+
+    is_BST = is_left_BST and is_right_BST and (root.val > left_max) and (root.val < right_min)
+
+    return is_BST
