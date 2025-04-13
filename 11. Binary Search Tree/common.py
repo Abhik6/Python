@@ -154,14 +154,12 @@ def create_BST_from_sorted_list_helper(lst, start, end):
         return None
     
     if start>=end:
-        print(start)
         return None
     
-    mid = (end-start)//2
+    mid = start + (end-start)//2
 
     node_val = lst[mid]
     node = BSTNode(node_val)
-    print(node_val)
     node.left = create_BST_from_sorted_list_helper(lst, start, mid)
     node.right = create_BST_from_sorted_list_helper(lst, mid+1, end)
 
@@ -171,4 +169,4 @@ def create_BST_from_sorted_list_helper(lst, start, end):
 
 def create_BST_from_sorted_list(lst):
 
-    return create_BST_from_sorted_list_helper(lst, 0, len(lst)-1)
+    return create_BST_from_sorted_list_helper(lst, 0, len(lst))
