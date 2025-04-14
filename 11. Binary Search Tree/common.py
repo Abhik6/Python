@@ -250,28 +250,17 @@ def get_minimum(node):
     return minimum    
 
 def check_BST(root):
-
+    
     if root is None:
         return True
 
-    is_left_BST = False
-    is_right_BST = False
-    left_max = float("-inf")
-    right_min = float("inf")
+    left_max = get_maximum(root.left)
+    right_min = get_minimum(root.right)
     
-    if root.left is not None:
-        if root.left.val >= root.val:
-            return False
-        else:
-            left_max = get_maximum(root.left)
-            is_left_BST = check_BST(root.left)
+    is_left_BST = check_BST(root.left)
     
-    if root.right is not None:
-        if root.right.val <= root.val:
-            return False
-        else:
-            right_min = get_minimum(root.right)
-            is_right_BST = check_BST(root.right)
+    is_right_BST = check_BST(root.right)
+    
 
     is_BST = is_left_BST and is_right_BST and (root.val > left_max) and (root.val < right_min)
 
