@@ -265,3 +265,19 @@ def check_BST(root):
     is_BST = is_left_BST and is_right_BST and (root.val > left_max) and (root.val < right_min)
 
     return is_BST
+
+def check_BST_Optimized(root):
+
+    if root is None:
+        return True
+    
+    left_max, left_min, is_left_BST = check_BST_Optimized(root.left)
+    
+    right_max, right_min, is_right_BST = check_BST_Optimized(root.right)
+
+    is_BST = is_left_BST and is_right_BST and (root.val > left_max) and (root.val < right_min)
+
+    maximum = max(root.val, right_max)
+    minimum = min(root.val, left_min)
+
+    return maximum, minimum, is_BST
