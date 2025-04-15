@@ -281,3 +281,19 @@ def check_BST_Optimized(root):
     minimum = min(root.val, left_min)
 
     return maximum, minimum, is_BST
+
+def print_elements_in_range(root, low, high):
+
+    if root is None:
+        return
+    
+    if root.val>low:
+        print_elements_in_range(root.left, low, high)
+    
+    if root.val>=low and root.val<=high:
+        print(root.val, end=" ") 
+
+    if root.val<high:
+        print_elements_in_range(root.right, low, high)
+
+    
