@@ -48,5 +48,22 @@ class BST:
         self.root = self.insert_helper(data, self.root)
 
 
+    def delete_helper(self, data, root):
+
+        if root is None:
+            return
+        
+        if root.val == data:
+
+            if root.left is None: 
+                return root.right
+        
+            if root.right is None:
+                return root.left
+            
+            
+        
+
+
     def delete(self, data):
         pass
