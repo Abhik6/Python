@@ -296,4 +296,24 @@ def print_elements_in_range(root, low, high):
     if root.val<high:
         print_elements_in_range(root.right, low, high)
 
+
+def check_BST_limits_helper(root, low, high):
+
+    if root is None:
+        return True
+    
+    if root.val<low or root.val>high:
+        return False
+     
+    is_left_BST = check_BST_limits_helper(root.left, low, root.val-1)
+    is_right_BST = check_BST_limits_helper(root.right, root.val+1, high)
+
+    is_BST = is_left_BST and is_right_BST
+
+    return is_BST
+
+
+def check_BST_limits(root):
+    return check_BST_limits_helper(root, float("-inf"), float("inf"))
+
     
