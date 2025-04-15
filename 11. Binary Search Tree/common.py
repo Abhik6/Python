@@ -269,7 +269,7 @@ def check_BST(root):
 def check_BST_Optimized(root):
 
     if root is None:
-        return True
+        return float("-inf"), float("inf"), True
     
     left_max, left_min, is_left_BST = check_BST_Optimized(root.left)
     
