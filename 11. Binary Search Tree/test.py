@@ -1,4 +1,5 @@
 from common import *
+from BST import *
 
 root1, root2, root3, root4 = create_predefined_BST()
 root5, root6 = create_predefined_binary_trees()
@@ -61,9 +62,31 @@ root5, root6 = create_predefined_binary_trees()
 # print()
 
 
-print(check_BST_limits(root1))
-print(check_BST_limits(root2))
-print(check_BST_limits(root3))
-print(check_BST_limits(root4))
-print(check_BST_limits(root5))
-print(check_BST_limits(root6))
+# print(check_BST_limits(root1))
+# print(check_BST_limits(root2))
+# print(check_BST_limits(root3))
+# print(check_BST_limits(root4))
+# print(check_BST_limits(root5))
+# print(check_BST_limits(root6))
+
+r1 = BST()
+r1.insert(20)
+r1.insert(30)
+r1.insert(15)
+r1.insert(25)
+r1.insert(50)
+r1.insert(5)
+
+print("Original Tree")
+print_BST_levelwise(r1.root)
+# print_BST_inorder(r1.root)
+# print()
+
+# print(r1.search(20))
+# print(r1.search(5))
+# print(r1.search(30))
+# print(r1.search(18))
+
+print("After deletion")
+r1.delete(20)
+print_BST_levelwise(r1.root)

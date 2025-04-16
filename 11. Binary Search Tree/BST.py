@@ -26,7 +26,7 @@ class BST:
         return result
 
     def search(self, data):
-
+        
         return self.search_helper(data, self.root)
     
 
