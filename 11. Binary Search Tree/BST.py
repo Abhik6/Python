@@ -1,3 +1,5 @@
+from common import get_maximum, get_minimum
+
 class BSTNode:
     def __init__(self, val, left=None, right=None):
         self.val = val
@@ -61,9 +63,16 @@ class BST:
             if root.right is None:
                 return root.left
             
-            
+            left_max = get_maximum(root.left)
+            root.val = left_max
+            root.left = self.delete_helper(left_max, root.left)
+
+        elif data < root.val:
+            root.left = self.delete_helper(data, root.left)
+        else:
+            root.right = self.delete_helper(data, root.right)        
+
+        return root
         
-
-
     def delete(self, data):
-        pass
+        self.root = self.delete_helper(data, self.root) 
