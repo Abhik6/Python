@@ -1,5 +1,7 @@
 from common import *
 from BST import *
+from successor_and_predessessor_in_BST import *
+from recover_BST import *
 
 root1, root2, root3, root4 = create_predefined_BST()
 root5, root6 = create_predefined_binary_trees()
@@ -69,16 +71,16 @@ root5, root6 = create_predefined_binary_trees()
 # print(check_BST_limits(root5))
 # print(check_BST_limits(root6))
 
-r1 = BST()
-r1.insert(20)
-r1.insert(30)
-r1.insert(15)
-r1.insert(25)
-r1.insert(50)
-r1.insert(5)
+# r1 = BST()
+# r1.insert(20)
+# r1.insert(30)
+# r1.insert(15)
+# r1.insert(25)
+# r1.insert(50)
+# r1.insert(5)
 
-print("Original Tree")
-print_BST_levelwise(r1.root)
+# print("Original Tree")
+# print_BST_levelwise(r1.root)
 # print_BST_inorder(r1.root)
 # print()
 
@@ -87,6 +89,14 @@ print_BST_levelwise(r1.root)
 # print(r1.search(30))
 # print(r1.search(18))
 
-print("After deletion")
-r1.delete(20)
-print_BST_levelwise(r1.root)
+# print("After deletion")
+# r1.delete(20)
+# print_BST_levelwise(r1.root)
+
+# print(find_predecessor_successor(root1,15))
+# print(find_predecessor_successor(root1,30))
+# print(find_predecessor_successor(root1,5))
+# print(find_predecessor_successor(root1,10))
+# print(find_predecessor_successor(root1,20))
+
+print_BST_levelwise(recover_tree(root5))

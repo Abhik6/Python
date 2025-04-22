@@ -9,11 +9,11 @@ class BSTNode:
 
 def create_predefined_binary_trees():
 
-    root1 = BSTNode(5)
+    root1 = BSTNode(4)
     child1 = BSTNode(3)
     child2 = BSTNode(6)
     child3 = BSTNode(2)
-    child4 = BSTNode(8)
+    child4 = BSTNode(5)
     child5 = BSTNode(1)
     child6 = BSTNode(7)
     root1.left = child1
