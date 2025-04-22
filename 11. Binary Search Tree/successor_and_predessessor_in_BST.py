@@ -65,13 +65,14 @@ def find_predecessor_successor(root, key):
         return None, None
     
     inorder_lst = inorder_BST(root, [])
+    print(inorder_lst)
 
     for i in range(len(inorder_lst)):    
         if key == inorder_lst[i]:
             if i == len(inorder_lst) - 1:
                 predecessor = inorder_lst[i-1]
                 successor = None
-            elif i == 1:
+            elif i == 0:
                 predecessor = None
                 successor = inorder_lst[i+1]
             else:
@@ -80,3 +81,107 @@ def find_predecessor_successor(root, key):
         
 
     return predecessor, successor
+
+
+#### Provided Solution #####
+
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+ 
+def find_predecessor_successor(root, key):
+    """
+    Function to find the predecessor and successor of a node with the given key in a BST.
+    
+    :param root: TreeNode -> The root of the binary search tree
+    :param key: int -> The value of the node for which to find the predecessor and successor
+    :return: Tuple[Optional[int], Optional[int]] -> A tuple containing the predecessor and successor
+    """
+    # Initialize predecessor and successor
+    predecessor = None
+    successor = None
+ 
+    # Helper function to find the node with the given key
+    def find_node(root, key):
+        if root is None:
+            return None
+        if root.val == key:
+            return root
+        elif key < root.val:
+            return find_node(root.left, key)
+        else:
+            return find_node(root.right, key)
+ 
+    # Helper function to find the maximum value node in a subtree
+    def find_max(node):
+        while node.right is not None:
+            node = node.right
+        return node
+ 
+    # Helper function to find the minimum value node in a subtree
+    def find_min(node):
+        while node.left is not None:
+            node = node.left
+        return node
+ 
+    # Find the target node
+    target_node = find_node(root, key)
+    
+    if not target_node:
+        return (None, None)
+    
+    # Finding predecessor
+    if target_node.left:
+        predecessor = find_max(target_node.left).val
+    
+    # Finding successor
+    if target_node.right:
+        successor = find_min(target_node.right).val
+    
+    # Find predecessor if target node has no left subtree
+    def find_predecessor(root, key):
+        pred = None
+        while root:
+            if key > root.val:
+                pred = root.val
+                root = root.right
+            elif key < root.val:
+                root = root.left
+            else:
+                break
+        return pred
+    
+    predecessor = find_predecessor(root, key) if target_node.left is None else predecessor
+    
+    # Find successor if target node has no right subtree
+    def find_successor(root, key):
+        succ = None
+        while root:
+            if key < root.val:
+                succ = root.val
+                root = root.left
+            elif key > root.val:
+                root = root.right
+            else:
+                break
+        return succ
+    
+    successor = find_successor(root, key) if target_node.right is None else successor
+    
+    return (predecessor, successor)
+ 
+# Helper function for debugging (can be removed for production)
+def display_predecessor_successor(root, key):
+    result = find_predecessor_successor(root, key)
+    print(result)
+ 
+# Example usage (can be removed)
+# root = TreeNode(20)
+# root.left = TreeNode(10)
+# root.right = TreeNode(30)
+# root.left.left = TreeNode(5)
+# root.left.right = TreeNode(15)
+# root.right.right = TreeNode(35)
+# display_predecessor_successor(root, 10)  # Output: (5, 15)
