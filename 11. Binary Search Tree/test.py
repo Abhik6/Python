@@ -2,6 +2,7 @@ from common import *
 from BST import *
 from successor_and_predessessor_in_BST import *
 from recover_BST import *
+from bst_queries import *
 
 root1, root2, root3, root4 = create_predefined_BST()
 root5, root6 = create_predefined_binary_trees()
@@ -99,4 +100,7 @@ root5, root6 = create_predefined_binary_trees()
 # print(find_predecessor_successor(root1,10))
 # print(find_predecessor_successor(root1,20))
 
-print_BST_levelwise(recover_tree(root5))
+# print_BST_levelwise(recover_tree(root5))
+
+queries = [[25,45], [0,50], [10,20], [50,100]]
+print(count_nodes_in_range(root2, queries))
