@@ -52,6 +52,18 @@ class LinkedList:
                 curr = curr.next       
         
         return False
+    
+    def traverse(self):
+        if self.head is None:
+            return "None: None\n"
+            
+        
+        temp = self.head
+        str = ""
+        while temp is not None:
+            str = str + f"{temp.key}: {temp.value}\n"
+            temp = temp.next
+        return str
 
 
 class HashmapUsingClosedHashing:
@@ -69,6 +81,7 @@ class HashmapUsingClosedHashing:
         bucket = self.slots[bucket_index]
 
         bucket.add(key, value)
+        self.size+=1
 
         return f"Inserted {key}: {value} in hashmap"
 
@@ -78,7 +91,7 @@ class HashmapUsingClosedHashing:
 
         value = bucket.find(key)
         if value is None:
-            return f"Key '{key} not found"
+            return f"Key '{key}' not found"
         
         return value
 
@@ -87,8 +100,29 @@ class HashmapUsingClosedHashing:
         bucket = self.slots[bucket_index]
 
         status = bucket.remove(key)
-        
-        if status:
-            return f"Key '{key} is removed"
+        self.size-=1
 
-        return f"Key '{key} not found"
+        if status:
+            return f"Key '{key}' is removed"
+
+        return f"Key '{key}' not found"
+    
+    def show(self):
+        str = "{\n"
+        for index in range(self.capacity):
+            bucket = self.slots[index]
+            str = str + bucket.traverse()
+        str+="}"
+        return str
+
+    def __setitem__(self, key, value):
+        status = self.insert(key, value)
+        print(status)
+    
+    def __getitem__(self, key):
+        value = self.search(key)
+        print(value)
+    
+    def __str__(self):
+        return self.show()
+
