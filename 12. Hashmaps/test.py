@@ -16,3 +16,7 @@ print(dict.delete("Four"))
 # dict.traverse()
 print(dict.delete("Eight"))
 dict.traverse()
+dict['five'] = 'Apricot'
+print()
+dict.traverse()
+print(dict['Three'])

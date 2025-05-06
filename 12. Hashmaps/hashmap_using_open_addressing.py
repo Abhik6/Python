@@ -8,7 +8,7 @@ class Hashmap:
     def hash_function(self, key):
         return abs(hash(key))
     
-    def linear_probe(self, hash_value):
+    def rehash(self, hash_value):
         return hash_value+1
 
     def insert(self, key, value):
@@ -24,7 +24,7 @@ class Hashmap:
             return f"Inserted {key}: {value} in hashmap"
         else:
             while bucket is not None and bucket != key:
-                hash_value = self.linear_probe(hash_value)
+                hash_value = self.rehash(hash_value)
                 new_bucket_index = hash_value % self.capacity
                 bucket = self.slots[new_bucket_index]
             
@@ -45,7 +45,7 @@ class Hashmap:
         
         while current is not None and current != key: 
 
-            hash_value = self.linear_probe(hash_value)
+            hash_value = self.rehash(hash_value)
             bucket_index = hash_value % self.capacity
             current = self.slots[bucket_index]
             if current == bucket:
@@ -65,7 +65,7 @@ class Hashmap:
         current = bucket
 
         while current is not None and current != key: 
-            hash_value = self.linear_probe(hash_value)
+            hash_value = self.rehash(hash_value)
             bucket_index = hash_value % self.capacity
             current = self.slots[bucket_index]
             if current == bucket:
@@ -90,4 +90,10 @@ class Hashmap:
                 print(f"{self.slots[i]} : {self.values[i]},")
         print("}")
 
+    
+    def __setitem__(self, key, value):
+        return self.insert(key, value)
 
+
+    def __getitem__(self, key):
+        return self.search(key)
