@@ -55,15 +55,15 @@ class LinkedList:
     
     def traverse(self):
         if self.head is None:
-            return "None: None\n"
+            return "\nNone: None"
             
         
         temp = self.head
-        str = ""
+        str = "\n"
         while temp is not None:
-            str = str + f"{temp.key}: {temp.value}\n"
+            str = str + f"{temp.key}: {temp.value},"
             temp = temp.next
-        return str
+        return str[:-1]
 
 
 class HashmapUsingClosedHashing:
@@ -71,7 +71,29 @@ class HashmapUsingClosedHashing:
     def __init__(self, capacity):
         self.capacity = capacity
         self.size = 0
-        self.slots = [LinkedList() for i in range(self.capacity)]
+        self.slots = self.__createbuckets(self.capacity)
+
+    def __createbuckets(self, capacity):
+        return [LinkedList() for i in range(capacity)]
+
+    def rehash(self, capacity):
+        print("Rehashing...")
+        self.capacity = capacity
+        self.size = 0
+        new_slots = self.__createbuckets(self.capacity)
+
+        for index in range(len(self.slots)):
+            bucket = self.slots[index]
+            temp = bucket.head
+            while temp is not None:
+                key = temp.key
+                value = temp.value
+                bucket_index = self.hash_function(key)
+                new_bucket = new_slots[bucket_index]
+                new_bucket.add(key, value)
+                temp = temp.next
+        self.slots = new_slots
+        print("Rehashing complete...")
 
     def hash_function(self, key):
         return abs(hash(key)) % self.capacity
@@ -82,8 +104,12 @@ class HashmapUsingClosedHashing:
 
         bucket.add(key, value)
         self.size+=1
+        print(f"Inserted {key}: {value} in hashmap")
+        load_factor = self.size/self.capacity
+        print(load_factor)
 
-        return f"Inserted {key}: {value} in hashmap"
+        if load_factor > 0.75:
+            self.rehash(self.capacity*2)
 
     def search(self, key):
         bucket_index = self.hash_function(key)
@@ -108,7 +134,7 @@ class HashmapUsingClosedHashing:
         return f"Key '{key}' not found"
     
     def show(self):
-        str = "{\n"
+        str = "{"
         for index in range(self.capacity):
             bucket = self.slots[index]
             str = str + bucket.traverse()
