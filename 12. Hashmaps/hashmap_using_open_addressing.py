@@ -9,6 +9,7 @@ class Hashmap:
         return abs(hash(key))
     
     def rehash(self, hash_value):
+        # Linear Probing done to avoid collision
         return hash_value+1
 
     def insert(self, key, value):
@@ -23,72 +24,80 @@ class Hashmap:
             self.size+=1
             return f"Inserted {key}: {value} in hashmap"
         else:
-            while bucket is not None and bucket != key:
-                hash_value = self.rehash(hash_value)
-                new_bucket_index = hash_value % self.capacity
-                bucket = self.slots[new_bucket_index]
-            
-            if bucket == key:
-                self.values[new_bucket_index] = value
+            # Update if key already present
+            if self.slots[bucket_index] == key:
+                self.values[bucket_index] = value
+                return f"Updated {key}: {value} in hashmap"
             else:
-                self.slots[new_bucket_index] = key
-                self.values[new_bucket_index] = value
-                self.size+=1
-                return f"Inserted {key}: {value} in hashmap"
+                # Continue probing until an empty slot is found or key is found
+                hash_value = self.rehash(hash_value)
+                while bucket is not None and bucket != key:
+                    hash_value = self.rehash(hash_value)
+                    new_bucket_index = hash_value % self.capacity
+                    bucket = self.slots[new_bucket_index]
+                
+                if bucket == key:
+                    # Key already exists
+                    self.values[new_bucket_index] = value
+                    return f"Updated {key}: {value} in hashmap"
+                else:
+                    self.slots[new_bucket_index] = key
+                    self.values[new_bucket_index] = value
+                    self.size+=1
+                    return f"Inserted {key}: {value} in hashmap"
 
-    def search(self, key):
+    def get(self, key):
 
         hash_value = self.hash_function(key)
-        bucket_index = hash_value % self.capacity
-        bucket = self.slots[bucket_index]
-        current = bucket
+        initial_index = hash_value % self.capacity
+        bucket = self.slots[initial_index]
+        current_index = initial_index
         
-        while current is not None and current != key: 
+        while bucket is not None: 
+            if bucket == key:
+                return self.values[current_index]
 
             hash_value = self.rehash(hash_value)
-            bucket_index = hash_value % self.capacity
-            current = self.slots[bucket_index]
-            if current == bucket:
-                return f"Key '{key}' not present"
+            current_index = hash_value % self.capacity
+            bucket = self.slots[current_index]
+            if current_index == initial_index:
+                return f"Key '{key}' not present, traversed full"
+        
+        return f"Key '{key}' not present"
+            
 
-        if current is None:
-            return f"Key '{key}' not present"
-        else:
-            return f"Value for Key '{key}' is {self.values[bucket_index]}"
-
-    
     def delete(self, key):
 
         hash_value = self.hash_function(key)
-        bucket_index = hash_value % self.capacity
-        bucket = self.slots[bucket_index]
-        current = bucket
+        initial_index = hash_value % self.capacity
+        bucket = self.slots[initial_index]
+        current_index = initial_index
 
-        while current is not None and current != key: 
+        while bucket is not None:
+            if bucket == key: 
+                self.slots[current_index] = None
+                self.values[current_index] = None
+                self.size-=1
+                return f"Key '{key}' is removed from hashmap"
             hash_value = self.rehash(hash_value)
-            bucket_index = hash_value % self.capacity
-            current = self.slots[bucket_index]
-            if current == bucket:
-                return f"Key '{key}' not present"
+            current_index = hash_value % self.capacity
+            bucket = self.slots[current_index]
+            if current_index == initial_index:
+                return f"Key '{key}' not present, traversed full"
 
-        if current is None:
-            return f"Key '{key}' not present"
-        else: 
-            self.slots[bucket_index] = None
-            self.values[bucket_index] = None
-            self.size-=1
-            return f"Key '{key}' is removed from hashmap"
+        return f"Key '{key}' not present"
         
-    
-    def traverse(self):
+  
+    def show(self):
 
-        print("{")
+        result = "{\n"
         for i in range(self.capacity):
             if i == self.capacity-1:
-                print(f"{self.slots[i]} : {self.values[i]}")
+                result+=f"{self.slots[i]} : {self.values[i]}\n"
             else:    
-                print(f"{self.slots[i]} : {self.values[i]},")
-        print("}")
+                result+=f"{self.slots[i]} : {self.values[i]},\n"
+        result+="}"
+        return result
 
     
     def __setitem__(self, key, value):
@@ -96,4 +105,7 @@ class Hashmap:
 
 
     def __getitem__(self, key):
-        return self.search(key)
+        return self.get(key)
+    
+    def __str__(self):
+        return self.show()
