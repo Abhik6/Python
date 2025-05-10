@@ -9,30 +9,19 @@ class LinkedList:
     def __init__(self):
         self.head = None
     
-    def add(self, key, value):
-        temp = self.head
-        
-        while temp is not None:
-            if temp.key == key:
-                temp.value = value
-                return 
-            temp = temp.next
-        
-        if temp is None:
-            new_node = LLNode(key, value)
-            new_node.next = self.head
-            self.head = new_node
-        
-        return 
-    
-    def find(self, key):
+    def add(self, key, value):          
+        new_node = LLNode(key, value)
+        new_node.next = self.head
+        self.head = new_node
+          
+    def search(self, key):
 
-        temp = self.head
+        current = self.head
 
-        while temp is not None:
-            if temp.key == key:
-                return temp.value 
-            temp = temp.next
+        while current is not None:
+            if current.key == key:
+                return current 
+            current = current.next
 
         return None
 
@@ -76,23 +65,18 @@ class HashmapUsingClosedHashing:
     def __createbuckets(self, capacity):
         return [LinkedList() for i in range(capacity)]
 
-    def rehash(self, capacity):
+    def rehash(self):
         print("Rehashing...")
-        self.capacity = capacity
-        self.size = 0
-        new_slots = self.__createbuckets(self.capacity)
+        old_buckets = self.slots
+        self.capacity = self.capacity*2
+        self.slots = self.__createbuckets(self.capacity)
+        self.size = 0 # Reset Size before reinserting elements
 
-        for index in range(len(self.slots)):
-            bucket = self.slots[index]
-            temp = bucket.head
-            while temp is not None:
-                key = temp.key
-                value = temp.value
-                bucket_index = self.hash_function(key)
-                new_bucket = new_slots[bucket_index]
-                new_bucket.add(key, value)
-                temp = temp.next
-        self.slots = new_slots
+        for eachLinkedListHead in old_buckets:
+            current = eachLinkedListHead.head
+            while current is not None:
+                self.insert(current.key, current.value)
+                current = current.next
         print("Rehashing complete...")
 
     def hash_function(self, key):
@@ -102,35 +86,42 @@ class HashmapUsingClosedHashing:
         bucket_index = self.hash_function(key)
         bucket = self.slots[bucket_index]
 
-        bucket.add(key, value)
-        self.size+=1
+        node = bucket.search(key)
+
+        if node is None:
+            bucket.add(key, value)
+            self.size+=1
+        else:
+            node.value = value
+
         print(f"Inserted {key}: {value} in hashmap")
+
         load_factor = self.size/self.capacity
-        print(load_factor)
+        print(f"Load Factor: {load_factor}")
 
         if load_factor > 0.75:
-            self.rehash(self.capacity*2)
+            self.rehash()
 
-    def search(self, key):
+    def get(self, key):
         bucket_index = self.hash_function(key)
         bucket = self.slots[bucket_index]
 
-        value = bucket.find(key)
-        if value is None:
+        node = bucket.search(key)
+        if node is None:
             return f"Key '{key}' not found"
         
-        return value
+        return node.value
 
     def delete(self, key):
         bucket_index = self.hash_function(key)
         bucket = self.slots[bucket_index]
 
         status = bucket.remove(key)
-        self.size-=1
-
+        
         if status:
+            self.size-=1
             return f"Key '{key}' is removed"
-
+            
         return f"Key '{key}' not found"
     
     def show(self):
@@ -148,6 +139,9 @@ class HashmapUsingClosedHashing:
     def __getitem__(self, key):
         value = self.search(key)
         print(value)
+
+    def __len__(self):
+        return self.size
     
     def __str__(self):
         return self.show()
