@@ -18,10 +18,10 @@ class GraphUsingEdgeList:
         
     def display(self):
         for vertex in self.vertices:
-            print(vertex)
+            print(f"Vertex: {vertex}")
         
-        for edge in self.edges:
-            print(edge)
+        for source, destination, weight in self.edges:
+            print(f"{source} --> {destination}")
 
 
 
