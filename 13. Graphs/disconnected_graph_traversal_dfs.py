@@ -19,7 +19,12 @@ class GraphAdjacencyMatrixDFS:
 
     def display(self):
 
-        result = self.display_DFS(0, [], [])
+        result = []
+        visited = []
+        for index in range(self.num_vertices):
+            if index not in visited:
+                result = self.display_DFS(index, visited, result)
+
         return result
 
     def display_DFS(self, index, visited, result):
@@ -35,19 +40,21 @@ class GraphAdjacencyMatrixDFS:
         return result
 
 
-graph = GraphAdjacencyMatrixDFS(6)
+graph = GraphAdjacencyMatrixDFS(7)
 graph.add_vertex(0, 'A')
 graph.add_vertex(1, 'B')
 graph.add_vertex(2, 'C')
 graph.add_vertex(3, 'D')
 graph.add_vertex(4, 'E')
 graph.add_vertex(5, 'F')
+graph.add_vertex(6, 'G')
  
 graph.add_edge(0, 1)
-graph.add_edge(0, 2)
+# graph.add_edge(0, 2)
 graph.add_edge(1, 3)
 graph.add_edge(3, 4)
 graph.add_edge(4, 5)
 graph.add_edge(3, 5)
- 
+graph.add_edge(2, 6)
+
 print(graph.display())

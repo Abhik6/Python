@@ -1,3 +1,5 @@
+from collections import deque
+
 class GraphAdjacencyMatrixDFS:
     def __init__(self, num_vertices):
         self.vertices = [None]*num_vertices
@@ -18,20 +20,25 @@ class GraphAdjacencyMatrixDFS:
             print("Index OOB")
 
     def display(self):
-
-        result = self.display_DFS(0, [], [])
+        
+        result = self.display_BFS(0, [], [])
         return result
 
-    def display_DFS(self, index, visited, result):
+    def display_BFS(self, start_index=0, visited=[], result=[]):
 
-        current_index = index
-        result.append(self.vertices[current_index])
-        visited.append(current_index)
-        for neighbour in range(self.num_vertices):
-            if self.adj_matrix[current_index][neighbour] > 0:
-                if neighbour not in visited:
-                    self.display_DFS(neighbour, visited, result)
-    
+        queue = deque()
+        queue.append(start_index)
+        visited.append(start_index)
+        
+        while len(queue) != 0:
+            current_index = queue.popleft()
+            result.append(self.vertices[current_index])
+            for neighbour in range(self.num_vertices):
+                if self.adj_matrix[current_index][neighbour] > 0:
+                    if neighbour not in visited:
+                        queue.append(neighbour)
+                        visited.append(neighbour)
+        
         return result
 
 
