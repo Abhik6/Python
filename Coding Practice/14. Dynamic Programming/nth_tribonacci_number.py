@@ -39,6 +39,7 @@ def tribonacci(n):
     """
     
     dp = [0]*(n+1)
+    print(dp)
     dp[0] = 0
     dp[1] = 1
     dp[2] = 1
@@ -48,7 +49,7 @@ def tribonacci(n):
 
     return dp[n], dp
 
-n = 25
+n = 3
 result, dp = tribonacci(n)
 print(result)
 print(dp)
