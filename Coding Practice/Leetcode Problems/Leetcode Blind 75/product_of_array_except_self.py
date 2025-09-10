@@ -48,10 +48,6 @@ class Solution:
         
         return answers
 
-
-
-        
-        return answers
     
 nums = [1,2,3,4]
 # nums = [-1,1,0,-3,3]
