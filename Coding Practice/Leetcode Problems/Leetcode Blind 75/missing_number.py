@@ -35,6 +35,13 @@ class Solution:
         for i in range(n+1):
             if i not in (nums):
                 return i
+    
+    def missingNumber2(self, nums: List[int]) -> int:
+        n = len(nums)
+        res = n
+        for i in range(n):
+            res+=(i-nums[i])
+        return res        
 
 # nums = [3,0,1]
 # nums = [0,1]
@@ -42,3 +49,5 @@ nums = [9,6,4,2,3,5,7,0,1]
 sol = Solution()
 result = sol.missingNumber(nums)
 print(result)
+result2 = sol.missingNumber2(nums)
+print(result2)
