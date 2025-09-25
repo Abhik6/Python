@@ -88,21 +88,22 @@ class Solution:
             else:
                 dp[i] = dp[i+1]
 
-            if i + 1 <= len(s)-1 and int(s[i:i+2]) >= 1 and int(s[i:i+2]) <= 26:
-                dp[i]+= dp[i+2]
+                if i + 1 <= len(s)-1 and int(s[i:i+2]) >= 1 and int(s[i:i+2]) <= 26:
+                    dp[i]+= dp[i+2]
         
-        return dp[0]
+        return dp[0],dp
 
 
-s = "12"  
+# s = "12"  
 # s = "226"  
 # s = "06"
+s = "2101"
 sol = Solution()
 result = sol.numDecodings(s)
 print(result)
-result2 = sol.numDecodings2(s)
+result2, dp = sol.numDecodings2(s)
 print(result2)
-# print(dp)
+print(dp)
         
 
 
